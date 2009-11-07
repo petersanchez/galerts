@@ -1,0 +1,1 @@
+Search.setIndex({desctypes:{},terms:{pre:1,index:0,search:0,liter:1,span:1,docutil:1,modul:0,indic:0,"class":1,content:0,galert:[0,1],tabl:0,page:0},titles:["galerts","<tt class=\"docutils literal\"><span class=\"pre\">galerts</span></tt>"],modules:{},descrefs:{},filenames:["index","galerts"]})
