@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>galerts &mdash; galerts v0.1.1 documentation</title>
+    <title>galerts &mdash; galerts v0.1.2 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.1.1',
+        VERSION:     '0.1.2',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,7 +19,7 @@
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="galerts v0.1.1 documentation" href="index.html" />
+    <link rel="top" title="galerts v0.1.2 documentation" href="index.html" />
     <link rel="next" title="galerts" href="galerts.html" />
     <link rel="prev" title="galerts" href="index.html" /> 
   </head>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="index.html" title="galerts"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">galerts v0.1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">galerts v0.1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -74,7 +74,7 @@ property, which provides an iterator of <tt class="xref docutils literal"><span 
 </pre></div>
 </div>
 <p>Looks like we have one existing alert, but it has a typo. Let&#8217;s fix it:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">query</span>
 <span class="go">&#39;Corner Confectionary&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="s">&#39;Corner Confectionery&#39;</span>
@@ -113,7 +113,7 @@ alert still has the old value:</p>
 updates to a comprehensive mix, and we changed the delivery method so that
 results will now be delivered via feed rather than via email. Let&#8217;s make sure
 the changes stuck:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">query</span>
 <span class="go">&#39;Corner Confectionery&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">type</span>
@@ -151,7 +151,7 @@ attribute has been updated to reflect this:</p>
 to create an email alert, we could have passed the additional keyword argument
 <em>feed=False</em> and an optional delivery frequency <em>freq</em>. Let&#8217;s demonstrate
 changing the feed alert we created to an email alert:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">feedurl</span>
 <span class="go">&#39;http://www.google.com/alerts/feed/...&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
@@ -162,7 +162,7 @@ changing the feed alert we created to an email alert:</p>
 </pre></div>
 </div>
 <p>And now:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span> <span class="c"># just to guarantee we have a fresh object</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span> <span class="c"># get a fresh object just to prove it</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
 <span class="go">&#39;&lt;Alert query=&quot;Cake Man Cornelius&quot; type=&quot;Comprehensive&quot; freq=&quot;once a day&quot; deliver=&quot;Email&quot;&gt;&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">feedurl</span>
@@ -230,12 +230,12 @@ changing the feed alert we created to an email alert:</p>
         <li class="right" >
           <a href="index.html" title="galerts"
              >previous</a> |</li>
-        <li><a href="index.html">galerts v0.1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">galerts v0.1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
       &copy; Copyright 2009, Josh Bronson.
-      Last updated on Nov 08, 2009.
+      Last updated on Nov 09, 2009.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
     </div>
   </body>

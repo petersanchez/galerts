@@ -121,7 +121,7 @@ changing the feed alert we created to an email alert::
 
 And now::
 
-    >>> alert = next(gam.alerts) # just to guarantee we have a fresh object
+    >>> alert = next(gam.alerts) # get a fresh object just to prove it
     >>> str(alert)
     '<Alert query="Cake Man Cornelius" type="Comprehensive" freq="once a day" deliver="Email">'
     >>> alert.feedurl

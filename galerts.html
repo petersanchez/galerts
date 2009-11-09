@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>galerts &mdash; galerts v0.1.1 documentation</title>
+    <title>galerts &mdash; galerts v0.1.2 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.1.1',
+        VERSION:     '0.1.2',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,7 +19,7 @@
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="galerts v0.1.1 documentation" href="index.html" />
+    <link rel="top" title="galerts v0.1.2 documentation" href="index.html" />
     <link rel="prev" title="galerts" href="README.html" /> 
   </head>
   <body>
@@ -35,7 +35,7 @@
         <li class="right" >
           <a href="README.html" title="galerts"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">galerts v0.1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">galerts v0.1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -63,7 +63,10 @@
 <p>You should not create <a title="galerts.Alert" class="reference internal" href="#galerts.Alert"><tt class="xref docutils literal"><span class="pre">Alert</span></tt></a> objects explicitly; the
 <a title="galerts.GAlertsManager" class="reference internal" href="#galerts.GAlertsManager"><tt class="xref docutils literal"><span class="pre">GAlertsManager</span></tt></a> will create them for you. You can then access
 alert objects via <a title="galerts.GAlertsManager.alerts" class="reference internal" href="#galerts.GAlertsManager.alerts"><tt class="xref docutils literal"><span class="pre">GAlertsManager.alerts</span></tt></a> to e.g. update their
-attributes and pass them back to the manager for saving.</p>
+attributes and pass them back to the manager for saving. To create a new
+alert, use <a title="galerts.GAlertsManager.create" class="reference internal" href="#galerts.GAlertsManager.create"><tt class="xref docutils literal"><span class="pre">GAlertsManager.create</span></tt></a>, and when you next access
+<a title="galerts.GAlertsManager.alerts" class="reference internal" href="#galerts.GAlertsManager.alerts"><tt class="xref docutils literal"><span class="pre">GAlertsManager.alerts</span></tt></a> you&#8217;ll find an <a title="galerts.Alert" class="reference internal" href="#galerts.Alert"><tt class="xref docutils literal"><span class="pre">Alert</span></tt></a> object there
+for the alert you just created.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -164,8 +167,8 @@ updated in real time)</li>
 <dt id="galerts.GAlertsManager.alerts">
 <tt class="descname">alerts</tt><a class="headerlink" href="#galerts.GAlertsManager.alerts" title="Permalink to this definition">¶</a></dt>
 <dd>Queries Google on every access for the alerts associated with this
-account, wraps them in <a title="galerts.Alert" class="reference internal" href="#galerts.Alert"><tt class="xref docutils literal"><span class="pre">Alert</span></tt></a> objects, and returns an
-iterable over them.</dd></dl>
+account, wraps them in <a title="galerts.Alert" class="reference internal" href="#galerts.Alert"><tt class="xref docutils literal"><span class="pre">Alert</span></tt></a> objects, and returns a
+generator you can use to iterate over them.</dd></dl>
 
 </dd></dl>
 
@@ -197,47 +200,47 @@ iterable over them.</dd></dl>
 <dl class="data">
 <dt id="galerts.FREQ_AS_IT_HAPPENS">
 <tt class="descclassname">galerts.</tt><tt class="descname">FREQ_AS_IT_HAPPENS</tt><a class="headerlink" href="#galerts.FREQ_AS_IT_HAPPENS" title="Permalink to this definition">¶</a></dt>
-<dd>Use this value for Alert.freq to indicate delivery in real time</dd></dl>
+<dd>Use this value for <tt class="xref docutils literal"><span class="pre">Alert.freq</span></tt> to indicate delivery in real time</dd></dl>
 
 <dl class="data">
 <dt id="galerts.FREQ_ONCE_A_DAY">
 <tt class="descclassname">galerts.</tt><tt class="descname">FREQ_ONCE_A_DAY</tt><a class="headerlink" href="#galerts.FREQ_ONCE_A_DAY" title="Permalink to this definition">¶</a></dt>
-<dd>Use this value for Alert.freq to indicate delivery once a day</dd></dl>
+<dd>Use this value for <tt class="xref docutils literal"><span class="pre">Alert.freq</span></tt> to indicate delivery once a day</dd></dl>
 
 <dl class="data">
 <dt id="galerts.FREQ_ONCE_A_WEEK">
 <tt class="descclassname">galerts.</tt><tt class="descname">FREQ_ONCE_A_WEEK</tt><a class="headerlink" href="#galerts.FREQ_ONCE_A_WEEK" title="Permalink to this definition">¶</a></dt>
-<dd>Use this value for Alert.freq to indicate delivery once a week</dd></dl>
+<dd>Use this value for <tt class="xref docutils literal"><span class="pre">Alert.freq</span></tt> to indicate delivery once a week</dd></dl>
 
 <dl class="data">
 <dt id="galerts.TYPE_BLOGS">
 <tt class="descclassname">galerts.</tt><tt class="descname">TYPE_BLOGS</tt><a class="headerlink" href="#galerts.TYPE_BLOGS" title="Permalink to this definition">¶</a></dt>
-<dd>Use this value for Alert.type to indicate blog results</dd></dl>
+<dd>Use this value for <tt class="xref docutils literal"><span class="pre">Alert.type</span></tt> to indicate blog results</dd></dl>
 
 <dl class="data">
 <dt id="galerts.TYPE_COMPREHENSIVE">
 <tt class="descclassname">galerts.</tt><tt class="descname">TYPE_COMPREHENSIVE</tt><a class="headerlink" href="#galerts.TYPE_COMPREHENSIVE" title="Permalink to this definition">¶</a></dt>
-<dd>Use this value for Alert.type to indicate comprehensive results</dd></dl>
+<dd>Use this value for <tt class="xref docutils literal"><span class="pre">Alert.type</span></tt> to indicate comprehensive results</dd></dl>
 
 <dl class="data">
 <dt id="galerts.TYPE_GROUPS">
 <tt class="descclassname">galerts.</tt><tt class="descname">TYPE_GROUPS</tt><a class="headerlink" href="#galerts.TYPE_GROUPS" title="Permalink to this definition">¶</a></dt>
-<dd>Use this value for Alert.type to indicate groups results</dd></dl>
+<dd>Use this value for <tt class="xref docutils literal"><span class="pre">Alert.type</span></tt> to indicate groups results</dd></dl>
 
 <dl class="data">
 <dt id="galerts.TYPE_NEWS">
 <tt class="descclassname">galerts.</tt><tt class="descname">TYPE_NEWS</tt><a class="headerlink" href="#galerts.TYPE_NEWS" title="Permalink to this definition">¶</a></dt>
-<dd>Use this value for Alert.type to indicate news results</dd></dl>
+<dd>Use this value for <tt class="xref docutils literal"><span class="pre">Alert.type</span></tt> to indicate news results</dd></dl>
 
 <dl class="data">
 <dt id="galerts.TYPE_VIDEO">
 <tt class="descclassname">galerts.</tt><tt class="descname">TYPE_VIDEO</tt><a class="headerlink" href="#galerts.TYPE_VIDEO" title="Permalink to this definition">¶</a></dt>
-<dd>Use this value for Alert.type to indicate video results</dd></dl>
+<dd>Use this value for <tt class="xref docutils literal"><span class="pre">Alert.type</span></tt> to indicate video results</dd></dl>
 
 <dl class="data">
 <dt id="galerts.TYPE_WEB">
 <tt class="descclassname">galerts.</tt><tt class="descname">TYPE_WEB</tt><a class="headerlink" href="#galerts.TYPE_WEB" title="Permalink to this definition">¶</a></dt>
-<dd>Use this value for Alert.type to indicate web results</dd></dl>
+<dd>Use this value for <tt class="xref docutils literal"><span class="pre">Alert.type</span></tt> to indicate web results</dd></dl>
 
 </div>
 
@@ -284,12 +287,12 @@ iterable over them.</dd></dl>
         <li class="right" >
           <a href="README.html" title="galerts"
              >previous</a> |</li>
-        <li><a href="index.html">galerts v0.1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">galerts v0.1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
       &copy; Copyright 2009, Josh Bronson.
-      Last updated on Nov 08, 2009.
+      Last updated on Nov 09, 2009.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
     </div>
   </body>
