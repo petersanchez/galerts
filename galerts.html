@@ -20,7 +20,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="galerts v0.1.1 documentation" href="index.html" />
-    <link rel="prev" title="galerts" href="index.html" /> 
+    <link rel="prev" title="galerts" href="README.html" /> 
   </head>
   <body>
     <div class="related">
@@ -30,7 +30,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="index.html" title="galerts"
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="README.html" title="galerts"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">galerts v0.1.1 documentation</a> &raquo;</li> 
       </ul>
@@ -41,8 +44,201 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="galerts">
-<h1><tt class="xref docutils literal"><span class="pre">galerts</span></tt><a class="headerlink" href="#galerts" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-galerts">
+<h1><tt class="xref docutils literal"><span class="pre">galerts</span></tt><a class="headerlink" href="#module-galerts" title="Permalink to this headline">¶</a></h1>
+<dl class="exception">
+<dt id="galerts.SignInError">
+<em class="property">exception </em><tt class="descclassname">galerts.</tt><tt class="descname">SignInError</tt><a class="headerlink" href="#galerts.SignInError" title="Permalink to this definition">¶</a></dt>
+<dd>Raised when Google sign in fails.</dd></dl>
+
+<dl class="exception">
+<dt id="galerts.UnexpectedResponseError">
+<em class="property">exception </em><tt class="descclassname">galerts.</tt><tt class="descname">UnexpectedResponseError</tt><big>(</big><em>status</em>, <em>headers</em>, <em>body</em><big>)</big><a class="headerlink" href="#galerts.UnexpectedResponseError" title="Permalink to this definition">¶</a></dt>
+<dd>Raised when Google&#8217;s response to a request is unrecognized.</dd></dl>
+
+<dl class="class">
+<dt id="galerts.Alert">
+<em class="property">class </em><tt class="descclassname">galerts.</tt><tt class="descname">Alert</tt><big>(</big><em>email</em>, <em>s</em>, <em>query</em>, <em>type</em>, <em>freq</em>, <em>deliver</em>, <em>feedurl=None</em><big>)</big><a class="headerlink" href="#galerts.Alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Models a Google Alert.</p>
+<p>You should not create <a title="galerts.Alert" class="reference internal" href="#galerts.Alert"><tt class="xref docutils literal"><span class="pre">Alert</span></tt></a> objects explicitly; the
+<a title="galerts.GAlertsManager" class="reference internal" href="#galerts.GAlertsManager"><tt class="xref docutils literal"><span class="pre">GAlertsManager</span></tt></a> will create them for you. You can then access
+alert objects via <a title="galerts.GAlertsManager.alerts" class="reference internal" href="#galerts.GAlertsManager.alerts"><tt class="xref docutils literal"><span class="pre">GAlertsManager.alerts</span></tt></a> to e.g. update their
+attributes and pass them back to the manager for saving.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>email</em> &#8211; an email address of the Google account associated with
+this alert</li>
+<li><em>s</em> &#8211; the hidden input &#8220;s&#8221; value Google associates with this alert;
+you shouldn&#8217;t ever have to worry about setting or getting this, it&#8217;s
+used internally by <a title="galerts.GAlertsManager" class="reference internal" href="#galerts.GAlertsManager"><tt class="xref docutils literal"><span class="pre">GAlertsManager</span></tt></a> to save changes to Google</li>
+<li><em>query</em> &#8211; the search terms the alert will match</li>
+<li><em>type</em> &#8211; a value in <a title="galerts.ALERT_TYPES" class="reference internal" href="#galerts.ALERT_TYPES"><tt class="xref docutils literal"><span class="pre">ALERT_TYPES</span></tt></a> indicating the desired
+results</li>
+<li><em>freq</em> &#8211; a value in <a title="galerts.ALERT_FREQS" class="reference internal" href="#galerts.ALERT_FREQS"><tt class="xref docutils literal"><span class="pre">ALERT_FREQS</span></tt></a> indicating how often results
+should be delivered</li>
+<li><em>deliver</em> &#8211; a value in <a title="galerts.DELIVER_TYPES" class="reference internal" href="#galerts.DELIVER_TYPES"><tt class="xref docutils literal"><span class="pre">DELIVER_TYPES</span></tt></a> indicating whether to
+deliver results via feed or email</li>
+<li><em>feedurl</em> &#8211; if a feed alert, the url of the feed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="galerts.GAlertsManager">
+<em class="property">class </em><tt class="descclassname">galerts.</tt><tt class="descname">GAlertsManager</tt><big>(</big><em>email</em>, <em>password</em><big>)</big><a class="headerlink" href="#galerts.GAlertsManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manages creation, modification, and deletion of Google Alerts for the
+Google account associated with <em>email</em>.</p>
+<p>Note: multiple email addresses can be associated with a single Google
+account, and if a user with multiple email addresses associated with her
+Google account signs into the web interface, it will allow her to set the
+delivery of email alerts to any of her associated email addresses. However,
+for now, <a title="galerts.GAlertsManager" class="reference internal" href="#galerts.GAlertsManager"><tt class="xref docutils literal"><span class="pre">GAlertsManager</span></tt></a> always uses the email address it&#8217;s
+instantiated with when creating new email alerts or changing feed alerts
+to email.</p>
+<p>Resorts to html scraping because no public API has been released.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><em>email</em> &#8211; sign in using this email address; if there is no &#64;
+symbol in the value, &#8220;&#64;gmail.com&#8221; will be appended to it</li>
+<li><em>password</em> &#8211; plaintext password, used only to get a session
+cookie (i.e. it&#8217;s sent over a secure connection and then discarded)</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><a title="galerts.SignInError" class="reference internal" href="#galerts.SignInError"><tt class="xref docutils literal"><span class="pre">SignInError</span></tt></a> if Google responds with &#8220;403 Forbidden&#8221; to
+our request to sign in</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><a title="galerts.UnexpectedResponseError" class="reference internal" href="#galerts.UnexpectedResponseError"><tt class="xref docutils literal"><span class="pre">UnexpectedResponseError</span></tt></a> if the status code of Google&#8217;s
+response is unrecognized (neither 403 nor 200)</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><tt class="xref docutils literal"><span class="pre">socket.error</span></tt> e.g. if there is no network connection</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="galerts.GAlertsManager.create">
+<tt class="descname">create</tt><big>(</big><em>query</em>, <em>type</em>, <em>feed=True</em>, <em>freq='0'</em><big>)</big><a class="headerlink" href="#galerts.GAlertsManager.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new alert.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>query</em> &#8211; the search terms the alert will match</li>
+<li><em>type</em> &#8211; a value in <a title="galerts.ALERT_TYPES" class="reference internal" href="#galerts.ALERT_TYPES"><tt class="xref docutils literal"><span class="pre">ALERT_TYPES</span></tt></a> indicating the desired
+results</li>
+<li><em>feed</em> &#8211; whether to deliver results via feed or email</li>
+<li><em>freq</em> &#8211; a value in <a title="galerts.ALERT_FREQS" class="reference internal" href="#galerts.ALERT_FREQS"><tt class="xref docutils literal"><span class="pre">ALERT_FREQS</span></tt></a> indicating how often results
+should be delivered; used only for email alerts (feed alerts are
+updated in real time)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="galerts.GAlertsManager.delete">
+<tt class="descname">delete</tt><big>(</big><em>alert</em><big>)</big><a class="headerlink" href="#galerts.GAlertsManager.delete" title="Permalink to this definition">¶</a></dt>
+<dd>Deletes an existing alert.</dd></dl>
+
+<dl class="method">
+<dt id="galerts.GAlertsManager.update">
+<tt class="descname">update</tt><big>(</big><em>alert</em><big>)</big><a class="headerlink" href="#galerts.GAlertsManager.update" title="Permalink to this definition">¶</a></dt>
+<dd>Updates an existing alert which has been modified.</dd></dl>
+
+<dl class="attribute">
+<dt id="galerts.GAlertsManager.alerts">
+<tt class="descname">alerts</tt><a class="headerlink" href="#galerts.GAlertsManager.alerts" title="Permalink to this definition">¶</a></dt>
+<dd>Queries Google on every access for the alerts associated with this
+account, wraps them in <a title="galerts.Alert" class="reference internal" href="#galerts.Alert"><tt class="xref docutils literal"><span class="pre">Alert</span></tt></a> objects, and returns an
+iterable over them.</dd></dl>
+
+</dd></dl>
+
+<dl class="data">
+<dt id="galerts.ALERT_FREQS">
+<tt class="descclassname">galerts.</tt><tt class="descname">ALERT_FREQS</tt><a class="headerlink" href="#galerts.ALERT_FREQS" title="Permalink to this definition">¶</a></dt>
+<dd>maps available alert frequencies to the values Google uses for them</dd></dl>
+
+<dl class="data">
+<dt id="galerts.ALERT_TYPES">
+<tt class="descclassname">galerts.</tt><tt class="descname">ALERT_TYPES</tt><a class="headerlink" href="#galerts.ALERT_TYPES" title="Permalink to this definition">¶</a></dt>
+<dd>maps available alert types to the values Google uses for them</dd></dl>
+
+<dl class="data">
+<dt id="galerts.DELIVER_EMAIL">
+<tt class="descclassname">galerts.</tt><tt class="descname">DELIVER_EMAIL</tt><a class="headerlink" href="#galerts.DELIVER_EMAIL" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value to indicate delivery via email</dd></dl>
+
+<dl class="data">
+<dt id="galerts.DELIVER_FEED">
+<tt class="descclassname">galerts.</tt><tt class="descname">DELIVER_FEED</tt><a class="headerlink" href="#galerts.DELIVER_FEED" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value to indicate delivery via feed</dd></dl>
+
+<dl class="data">
+<dt id="galerts.DELIVER_TYPES">
+<tt class="descclassname">galerts.</tt><tt class="descname">DELIVER_TYPES</tt><a class="headerlink" href="#galerts.DELIVER_TYPES" title="Permalink to this definition">¶</a></dt>
+<dd>maps available delivery types to the values Google uses for them</dd></dl>
+
+<dl class="data">
+<dt id="galerts.FREQ_AS_IT_HAPPENS">
+<tt class="descclassname">galerts.</tt><tt class="descname">FREQ_AS_IT_HAPPENS</tt><a class="headerlink" href="#galerts.FREQ_AS_IT_HAPPENS" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value for Alert.freq to indicate delivery in real time</dd></dl>
+
+<dl class="data">
+<dt id="galerts.FREQ_ONCE_A_DAY">
+<tt class="descclassname">galerts.</tt><tt class="descname">FREQ_ONCE_A_DAY</tt><a class="headerlink" href="#galerts.FREQ_ONCE_A_DAY" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value for Alert.freq to indicate delivery once a day</dd></dl>
+
+<dl class="data">
+<dt id="galerts.FREQ_ONCE_A_WEEK">
+<tt class="descclassname">galerts.</tt><tt class="descname">FREQ_ONCE_A_WEEK</tt><a class="headerlink" href="#galerts.FREQ_ONCE_A_WEEK" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value for Alert.freq to indicate delivery once a week</dd></dl>
+
+<dl class="data">
+<dt id="galerts.TYPE_BLOGS">
+<tt class="descclassname">galerts.</tt><tt class="descname">TYPE_BLOGS</tt><a class="headerlink" href="#galerts.TYPE_BLOGS" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value for Alert.type to indicate blog results</dd></dl>
+
+<dl class="data">
+<dt id="galerts.TYPE_COMPREHENSIVE">
+<tt class="descclassname">galerts.</tt><tt class="descname">TYPE_COMPREHENSIVE</tt><a class="headerlink" href="#galerts.TYPE_COMPREHENSIVE" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value for Alert.type to indicate comprehensive results</dd></dl>
+
+<dl class="data">
+<dt id="galerts.TYPE_GROUPS">
+<tt class="descclassname">galerts.</tt><tt class="descname">TYPE_GROUPS</tt><a class="headerlink" href="#galerts.TYPE_GROUPS" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value for Alert.type to indicate groups results</dd></dl>
+
+<dl class="data">
+<dt id="galerts.TYPE_NEWS">
+<tt class="descclassname">galerts.</tt><tt class="descname">TYPE_NEWS</tt><a class="headerlink" href="#galerts.TYPE_NEWS" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value for Alert.type to indicate news results</dd></dl>
+
+<dl class="data">
+<dt id="galerts.TYPE_VIDEO">
+<tt class="descclassname">galerts.</tt><tt class="descname">TYPE_VIDEO</tt><a class="headerlink" href="#galerts.TYPE_VIDEO" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value for Alert.type to indicate video results</dd></dl>
+
+<dl class="data">
+<dt id="galerts.TYPE_WEB">
+<tt class="descclassname">galerts.</tt><tt class="descname">TYPE_WEB</tt><a class="headerlink" href="#galerts.TYPE_WEB" title="Permalink to this definition">¶</a></dt>
+<dd>Use this value for Alert.type to indicate web results</dd></dl>
+
 </div>
 
 
@@ -52,7 +248,7 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
             <h4>Previous topic</h4>
-            <p class="topless"><a href="index.html"
+            <p class="topless"><a href="README.html"
                                   title="previous chapter">galerts</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
@@ -83,14 +279,17 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="index.html" title="galerts"
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="README.html" title="galerts"
              >previous</a> |</li>
         <li><a href="index.html">galerts v0.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
       &copy; Copyright 2009, Josh Bronson.
-      Last updated on Nov 07, 2009.
+      Last updated on Nov 08, 2009.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
     </div>
   </body>

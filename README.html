@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>galerts &mdash; galerts v0.1.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="galerts v0.1.1 documentation" href="index.html" />
+    <link rel="next" title="galerts" href="galerts.html" />
+    <link rel="prev" title="galerts" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="galerts.html" title="galerts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="galerts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">galerts v0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="galerts">
+<h1>galerts<a class="headerlink" href="#galerts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<p>galerts is a Python client for managing <a class="reference external" href="http://www.google.com/alerts">Google Alerts</a>. Currently it resorts to scraping html from
+Google&#8217;s web interface since there is as of yet no public API. If they ever
+decide to publish one, galerts will switch to using it.</p>
+<p>Please find <a class="reference external" href="http://github.com/jab/galerts">galerts on github</a>
+if you have any questions or would like to collaborate.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>First create an alerts manager for a given account:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">galerts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gam</span> <span class="o">=</span> <span class="n">galerts</span><span class="o">.</span><span class="n">GAlertsManager</span><span class="p">(</span><span class="s">&#39;cornelius@gmail.com&#39;</span><span class="p">,</span> <span class="s">&#39;p4ssw0rd&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(Note: The plaintext password is used only to get a session cookie, i.e. it&#8217;s
+sent over a secure connection and then discarded.)</p>
+<p>Now you can access the existing alerts for that account via the <tt class="xref docutils literal"><span class="pre">alerts</span></tt>
+property, which provides an iterator of <tt class="xref docutils literal"><span class="pre">Alert</span></tt> objects:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<span class="go">[&lt;Alert for &quot;Corner Confectionary&quot; at ...&gt;]</span>
+</pre></div>
+</div>
+<p>Looks like we have one existing alert, but it has a typo. Let&#8217;s fix it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">query</span>
+<span class="go">&#39;Corner Confectionary&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="s">&#39;Corner Confectionery&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span>
+<span class="go">&lt;Alert for &quot;Corner Confectionery&quot; at ...&gt;</span>
+</pre></div>
+</div>
+<p>So far we&#8217;ve only changed the value in memory; as far as Google knows, the
+alert still has the old value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<span class="go">[&lt;Alert for &quot;Corner Confectionary&quot; at ...&gt;]</span>
+</pre></div>
+</div>
+<p>To save the result to Google, do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gam</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And now it should be updated:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<span class="go">[&lt;Alert for &quot;Corner Confectionery&quot; at ...&gt;]</span>
+</pre></div>
+</div>
+<p>You can also change other attributes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;Blogs&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">deliver</span>
+<span class="go">&#39;Email&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">freq</span>
+<span class="go">&#39;once a week&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">galerts</span><span class="o">.</span><span class="n">TYPE_COMPREHENSIVE</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">deliver</span> <span class="o">=</span> <span class="n">galerts</span><span class="o">.</span><span class="n">DELIVER_FEED</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gam</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We&#8217;ve just changed the type of results the alert delivers from only blog
+updates to a comprehensive mix, and we changed the delivery method so that
+results will now be delivered via feed rather than via email. Let&#8217;s make sure
+the changes stuck:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">query</span>
+<span class="go">&#39;Corner Confectionery&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;Comprehensive&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">deliver</span>
+<span class="go">&#39;feed&#39;</span>
+</pre></div>
+</div>
+<p>Google Alerts feeds update continuously, and our alert object&#8217;s <tt class="xref docutils literal"><span class="pre">freq</span></tt>
+attribute has been updated to reflect this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">freq</span>
+<span class="go">&#39;as-it-happens&#39;</span>
+</pre></div>
+</div>
+<p>And now we can also get the url of the feed results will be delivered to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">feedurl</span>
+<span class="go">&#39;http://www.google.com/alerts/feed/...&#39;</span>
+</pre></div>
+</div>
+<p>To delete the alert:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gam</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>And to create a new one:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="s">&#39;Cake Man Cornelius&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span> <span class="o">=</span> <span class="n">galerts</span><span class="o">.</span><span class="n">TYPE_COMPREHENSIVE</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gam</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<span class="go">[&lt;Alert for &quot;Cake Man Cornelius&quot; at ...&gt;]</span>
+</pre></div>
+</div>
+<p>This created a feed alert since we didn&#8217;t specify otherwise. If we had wanted
+to create an email alert, we could have passed the additional keyword argument
+<em>feed=False</em> and an optional delivery frequency <em>freq</em>. Let&#8217;s demonstrate
+changing the feed alert we created to an email alert:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">feedurl</span>
+<span class="go">&#39;http://www.google.com/alerts/feed/...&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
+<span class="go">&#39;&lt;Alert query=&quot;Cake Man Cornelius&quot; type=&quot;Comprehensive&quot; freq=&quot;as-it-happens&quot; deliver=&quot;feed&quot;&gt;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">deliver</span> <span class="o">=</span> <span class="n">galerts</span><span class="o">.</span><span class="n">DELIVER_EMAIL</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="n">galerts</span><span class="o">.</span><span class="n">FREQ_ONCE_A_DAY</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gam</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And now:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span> <span class="c"># just to guarantee we have a fresh object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
+<span class="go">&#39;&lt;Alert query=&quot;Cake Man Cornelius&quot; type=&quot;Comprehensive&quot; freq=&quot;once a day&quot; deliver=&quot;Email&quot;&gt;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">feedurl</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">galerts</a><ul>
+<li><a class="reference external" href="#intro">Intro</a></li>
+<li><a class="reference external" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">galerts</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="galerts.html"
+                                  title="next chapter"><tt class="docutils literal"><span class="pre">galerts</span></tt></a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/README.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="galerts.html" title="galerts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="galerts"
+             >previous</a> |</li>
+        <li><a href="index.html">galerts v0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Josh Bronson.
+      Last updated on Nov 08, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
+    </div>
+  </body>
+</html>
