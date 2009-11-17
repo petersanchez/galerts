@@ -101,9 +101,9 @@ alert still has the old value:</p>
 <p>You may have noticed that the <tt class="docutils literal"><span class="pre">Alert.query</span></tt> property returns a <tt class="docutils literal"><span class="pre">unicode</span></tt>
 value. Google allows alert queries with non-ASCII characters, so we support
 this via unicode. For convenience, you can set <tt class="docutils literal"><span class="pre">Alert.query</span></tt> to a <tt class="docutils literal"><span class="pre">string</span></tt>
-instead of a <tt class="docutils literal"><span class="pre">unicode</span></tt> as we did above and it will transformed to a
+instead of a <tt class="docutils literal"><span class="pre">unicode</span></tt> as we did above and it will be transformed to a
 <tt class="docutils literal"><span class="pre">unicode</span></tt> automatically; just be sure that <tt class="docutils literal"><span class="pre">unicode(yourstring)</span></tt> doesn&#8217;t
-fail. The query is encoded to <em>utf-8</em> when it is sent to Google.</p>
+fail.</p>
 <p>As we see above, every time you access <tt class="docutils literal"><span class="pre">gam.alerts</span></tt>, <tt class="docutils literal"><span class="pre">GAlertsManager</span></tt> asks
 Google for your alerts and creates new <tt class="docutils literal"><span class="pre">Alert</span></tt> objects with the information
 Google returned. It&#8217;s okay (and desirable) that we may have one object
@@ -114,9 +114,9 @@ a snapshot of the information Google has at the time it was requested, rather
 than as canonical representations of the data which are kept up-to-date.
 <tt class="docutils literal"><span class="pre">Alert</span></tt> objects are disposable; they&#8217;re used merely to wrap some string
 attributes. As such, you can pass any old <tt class="docutils literal"><span class="pre">Alert</span></tt> object to <tt class="docutils literal"><span class="pre">gam.update</span></tt>
-and the manager will tell Google to update its information to match the alert
-passed in. For convenience, <tt class="docutils literal"><span class="pre">Alert.__eq__</span></tt> has been overridden so that two
-different <tt class="docutils literal"><span class="pre">Alert</span></tt> objects with the same attribute values compare equal.</p>
+and the manager will tell Google to update its information to match the object
+passed in. <tt class="docutils literal"><span class="pre">Alert.__eq__</span></tt> has been overridden so that two different
+<tt class="docutils literal"><span class="pre">Alert</span></tt> objects with the same attribute values compare equal.</p>
 <p>Keeping this in mind, let&#8217;s return to our old <tt class="docutils literal"><span class="pre">Alert</span></tt> object. Let&#8217;s say we&#8217;d
 like to change some other attributes:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">type</span>
@@ -138,13 +138,13 @@ results will now be delivered via feed rather than via email.</p>
 but we&#8217;ll have to grab a fresh <tt class="docutils literal"><span class="pre">Alert</span></tt> object if we want to know the url
 of the alert&#8217;s feed:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gam</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">feedurl</span> <span class="c"># this is now stale:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">feedurl</span> <span class="c"># this is now stale</span>
 <span class="go">None</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">oldalert</span> <span class="o">=</span> <span class="n">alert</span> <span class="c"># so get a fresh one</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">=</span> <span class="n">next</span><span class="p">(</span><span class="n">gam</span><span class="o">.</span><span class="n">alerts</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">feedurl</span> <span class="c"># and now it&#39;s up-to-date:</span>
 <span class="go">&#39;http://www.google.com/alerts/feed/...&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">==</span> <span class="n">oldalert</span> <span class="c"># feedurls don&#39;t match, so:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span> <span class="o">==</span> <span class="n">oldalert</span> <span class="c"># feedurls don&#39;t match</span>
 <span class="go">False</span>
 </pre></div>
 </div>
@@ -163,7 +163,7 @@ the feed in real time as they are found. The new alert object&#8217;s <tt class=
 property reflects this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alert</span><span class="o">.</span><span class="n">freq</span>
 <span class="go">&#39;as-it-happens&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">oldalert</span><span class="o">.</span><span class="n">freq</span> <span class="c"># stale:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">oldalert</span><span class="o">.</span><span class="n">freq</span> <span class="c"># stale</span>
 <span class="go">&#39;once a week&#39;</span>
 </pre></div>
 </div>
@@ -271,7 +271,7 @@ something other than the default &#8220;as-it-happens&#8221;.</p>
     </div>
     <div class="footer">
       &copy; Copyright 2009, Josh Bronson.
-      Last updated on Nov 10, 2009.
+      Last updated on Nov 17, 2009.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
     </div>
   </body>
