@@ -1,0 +1,11 @@
+#!/bin/bash
+# prepare sphinx-generated html docs for github pages
+
+mv docs/build/html/* .
+rm -rf docs sources static
+mv _sources sources
+mv _static static
+for i in *.html *.js static/searchtools.js; do
+    sed -i '' s/_sources/sources/ $i
+    sed -i '' s/_static/static/ $i
+done
