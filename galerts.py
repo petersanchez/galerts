@@ -69,6 +69,9 @@ TYPE_COMPREHENSIVE = 'Comprehensive'
 TYPE_VIDEO = 'Video'
 #: Use this value for :attr:`Alert.type` to indicate groups results
 TYPE_GROUPS = 'Groups'
+
+TYPE_EVERYTHING = 'Everything'
+
 #: maps available alert types to the values Google uses for them
 ALERT_TYPES = {
     TYPE_NEWS: '1',
@@ -77,6 +80,7 @@ ALERT_TYPES = {
     TYPE_COMPREHENSIVE: '7',
     TYPE_VIDEO: '9',
     TYPE_GROUPS: '8',
+    TYPE_EVERYTHING: '10', # is this right?
     }
 
 class SignInError(Exception):
@@ -292,6 +296,7 @@ class GAlertsManager(object):
             if response.status != 200:
                 raise UnexpectedResponseError(response.status, response.getheaders(), body)
             self.cookie = '; '.join(body.split('\n'))
+            return (self.cookie is not  None)
         finally:
             conn.close()
 
